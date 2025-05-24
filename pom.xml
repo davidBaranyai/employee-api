@@ -31,5 +31,27 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>12.10.0.jre11</version>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>4.32.0</version> <!-- Use latest version -->
+                <configuration>
+                    <changeLogFile>db/changelog-employees.xml</changeLogFile>
+                    <url>jdbc:sqlserver://localhost:1433;databaseName=master;encrypt=false</url>
+                    <username>${env.DB_USER}</username>
+                    <password>${env.DB_PASSWORD}</password>
+                    <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

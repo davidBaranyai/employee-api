@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="create-employees-table" author="David Baranyai">
+        <createTable tableName="employees">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="team" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manager_id" type="INT"/>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="employees"
+                baseColumnNames="manager_id"
+                referencedTableName="employees"
+                referencedColumnNames="id"
+                constraintName="fk_employees_manager"/>
+    </changeSet>
+</databaseChangeLog>
