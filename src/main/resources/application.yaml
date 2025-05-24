@@ -1,2 +1,11 @@
 server:
     port: 8081
+
+spring:
+    datasource:
+        url: jdbc:sqlserver://localhost:1433;databaseName=master;encrypt=false
+        username: ${DB_USER}
+        password: ${DB_PASSWORD}
+        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    jpa:
+        open-in-view: false
