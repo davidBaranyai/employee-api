@@ -1,4 +1,4 @@
-package com.ericsson.employeeapi.repository;
+package com.ericsson.employeeapi;
 
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.boot.test.context.TestConfiguration;

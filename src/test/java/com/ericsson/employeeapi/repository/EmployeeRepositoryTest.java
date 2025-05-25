@@ -1,5 +1,6 @@
 package com.ericsson.employeeapi.repository;
 
+import com.ericsson.employeeapi.LiquibaseTestConfig;
 import com.ericsson.employeeapi.model.Employee;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,16 @@ class EmployeeRepositoryTest {
     EmployeeRepository underTest;
 
     @Test
-    void findByManagerId() {
+    void findByManagerId_ifManagerPresent_shouldReturnEmployees() {
         List<Employee> result = underTest.findByManagerId(1);
         assertNotNull(result);
         assertEquals(2, result.size());
     }
 
+    @Test
+    void findByManagerId_ifManagerNotPresent_shouldReturnEmptyList() {
+        List<Employee> result = underTest.findByManagerId(5);
+        assertNotNull(result);
+        assertEquals(0, result.size());
+    }
 }
