@@ -4,6 +4,7 @@ import com.ericsson.employeeapi.dto.EmployeeDto;
 import com.ericsson.employeeapi.dto.EmployeeRequestDto;
 import com.ericsson.employeeapi.dto.EmploymentDaysDto;
 import com.ericsson.employeeapi.exception.EmployeeNotFoundException;
+import com.ericsson.employeeapi.exception.IncorrectManagerIdException;
 import com.ericsson.employeeapi.service.EmployeeService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -84,7 +85,13 @@ public class EmployeeController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EmployeeNotFoundException.class)
-    public Map<String, String> handleValidationExceptions(EmployeeNotFoundException ex) {
+    public Map<String, String> handleEmployeeNotFound(EmployeeNotFoundException ex) {
         return Map.of("id", ex.getId().toString());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IncorrectManagerIdException.class)
+    public Map<String, String> handleIncorrectManagerId(IncorrectManagerIdException ex) {
+        return Map.of("managerId", ex.getMessage());
     }
 }

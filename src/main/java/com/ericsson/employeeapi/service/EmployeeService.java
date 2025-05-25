@@ -4,8 +4,10 @@ import com.ericsson.employeeapi.dto.EmployeeDto;
 import com.ericsson.employeeapi.dto.EmployeeRequestDto;
 import com.ericsson.employeeapi.dto.EmploymentDaysDto;
 import com.ericsson.employeeapi.exception.EmployeeNotFoundException;
+import com.ericsson.employeeapi.exception.IncorrectManagerIdException;
 import com.ericsson.employeeapi.mapper.EmployeeMapper;
 import com.ericsson.employeeapi.model.Employee;
+import com.ericsson.employeeapi.model.Role;
 import com.ericsson.employeeapi.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,17 +42,29 @@ public class EmployeeService {
     }
 
     public EmployeeDto createEmployee(EmployeeRequestDto request) {
+        validateManagerId(request);
         Employee employee = repository.save(mapper.toEmployeeFromRequest(request));
 
         return mapper.toEmployeeDto(employee);
     }
 
     public EmployeeDto updateEmployee(Integer id, EmployeeRequestDto request) {
+        validateManagerId(request);
         Employee employee = repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
         employee = mapper.updateEmployeeFromRequest(employee, request);
         repository.save(employee);
 
         return mapper.toEmployeeDto(employee);
+    }
+
+    private void validateManagerId(EmployeeRequestDto request) {
+        if (request.getManagerId() != null) {
+            Employee manager = repository.findById(request.getManagerId())
+                    .orElseThrow(() -> new EmployeeNotFoundException(request.getManagerId()));
+            if (!Role.MANAGER.equals(manager.getRole())) {
+                throw new IncorrectManagerIdException(manager.getId());
+            }
+        }
     }
 
     public void deleteEmployee(Integer id) {
