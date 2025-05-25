@@ -116,7 +116,7 @@
                 <version>4.32.0</version> <!-- Use latest version -->
                 <configuration>
                     <changeLogFile>db/changelog-employees.xml</changeLogFile>
-                    <url>jdbc:sqlserver://localhost:1433;databaseName=master;encrypt=false</url>
+                    <url>jdbc:sqlserver://${env.DB_HOST}:${env.DB_PORT};databaseName=master;encrypt=false</url>
                     <username>${env.DB_USER}</username>
                     <password>${env.DB_PASSWORD}</password>
                     <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
