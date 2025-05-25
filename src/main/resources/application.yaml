@@ -3,7 +3,7 @@ server:
 
 spring:
     datasource:
-        url: jdbc:sqlserver://localhost:1433;databaseName=master;encrypt=false
+        url: jdbc:sqlserver://${DB_HOST}:${DB_PORT};databaseName=master;encrypt=false
         username: ${DB_USER}
         password: ${DB_PASSWORD}
         driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
